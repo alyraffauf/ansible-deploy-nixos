@@ -1,0 +1,2 @@
+[servers]
+mauville ansible_python_interpreter=/run/current-system/sw/bin/python3

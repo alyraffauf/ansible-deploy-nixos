@@ -1,0 +1,20 @@
+---
+- hosts: servers
+  remote_user: root
+  pre_tasks:
+    - name: Wait for connectivity
+      ansible.builtin.wait_for_connection:
+        timeout: 10
+      register: wait_connect_result
+      until: wait_connect_result is success
+      retries: 18
+      delay: 10
+
+    - name: gather facts
+      tags: [ always ]
+      gather_facts:
+  tasks:
+    - name: nixos-rebuild switch
+      become: true
+      ansible.builtin.command:
+        cmd: nixos-rebuild switch --flake github:alyraffauf/nixcfg
